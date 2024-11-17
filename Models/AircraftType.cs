@@ -1,7 +1,10 @@
-﻿namespace Airline.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Airline.Models
 {
     public class AircraftType
     {
+        [Key]
         public int TypeId { get; set; }
         public string Brand { get; set; }
         public int Range { get; set; }
