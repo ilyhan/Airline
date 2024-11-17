@@ -2,7 +2,201 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<style>
+    .background {
+        background-image: url('/img/background.jpg');
+        background-size: cover;
+        background-position: center;
+        width: 100%;
+        height: 600px;
+    }
+    .color-white {
+        color: whitesmoke;
+    }
+
+    .form-wrapper {
+        margin-top: 150px;
+    }
+
+    .form{
+        display: flex;
+        gap: 15px;
+        align-items: center;
+        margin-top: 30px;
+    }
+
+    .popular-city-section{
+        margin-top: 50px;
+    }
+
+    .popular-city-wrapper{
+        display: flex;
+        gap: 20px;
+        justify-content: space-between;
+    }
+
+    .city-card{
+        position: relative;
+        height: 400px;
+        width: 300px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .city-image{
+        width: 100%;
+        object-fit: cover;
+        height: 100%;
+    }
+
+    .city-name {
+        position: absolute;
+        bottom: 15px;
+        left: 10px;
+        color: whitesmoke;
+        margin: 0;
+        font-weight: 500;
+    }
+
+    .service{
+        margin-top: 60px;
+        padding-bottom: 50px;
+    }
+
+    .top-service {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .service-card{
+        position: relative;
+        height: 300px;
+        width: 47%;
+        background-color: #3b47ad;
+        border-radius: 20px;
+        padding: 20px;
+        color: whitesmoke;
+    }
+
+    .service-card h3 {
+        font-size: 36px;
+    }
+
+    .service-card p {
+        font-size: 24px;
+        font-weight: 500;
+        width: 55%;
+        margin-top: 30px;
+    }
+    
+    .service-card_color{
+        background-color: #00a2b8;
+    }
+
+    .service-card_rotate::after{
+        content: '';
+        position: absolute;
+        right: 20px;
+        bottom: 20px;
+        display: block;
+        width: 150px;
+        height: 150px;
+        background-image: url('/img/rotate.png');
+        background-size: cover;
+    }
+
+    .service-card_100::after {
+        content: "100%";
+        position: absolute;
+        right: -60px;
+        top: 30%;
+        font-size: 70px;
+        rotate: -90deg;
+        font-weight: 700;
+    }
+</style>
+ 
+<div class="background color-white">
+    <div class="container">
+        <h1 class="display-4 pt-5">Авиакомпания</h1>
+
+        <div class="form-wrapper">
+            <p class="fs-2">Укажите маршрут, чтобы найти дешевые авиабилеты</p>
+
+            <form class="form">
+                <div>
+                    <input class="form-control" placeholder="Откуда" />
+                    <span class="text-danger"></span>
+                </div>
+
+                <div>
+                    <input class="form-control" placeholder="Куда"/>
+                    <span class="text-danger"></span>
+                </div>
+
+                <div>
+                    <input type="date" id="flightDate" class="form-control" placeholder="Дата вылета" />
+                    <span class="text-danger"></span>
+                </div>
+
+                <div>
+                    <select class="form-control" id="classSelect">
+                        <option value="" disabled selected>Выберите класс</option>
+                        <option value="Эконом">Эконом</option>
+                        <option value="Бизнес">Бизнес</option>
+                    </select>
+                    <span class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Поиск билетов" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <section class="popular-city-section">
+        <h2 class="mb-4">Популярные города</h2>
+
+           <div class="popular-city-wrapper">
+                <div class="city-card">
+                    <img src="/img/moskva2.jpg" class="city-image" alt="Москва" />
+                    <p class="city-name fs-2">Москва</p>
+                </div>
+
+                <div class="city-card">
+                    <img src="/img/peterburg.jpg" class="city-image" alt="Санкт-Петербург" />
+                    <p class="city-name fs-2">Санкт-Петербург</p>
+                </div>
+
+                <div class="city-card">
+                    <img src="/img/vladivistok.jpeg" class="city-image" alt="Владивосток" />
+                    <p class="city-name fs-2">Владивосток</p>
+                </div>
+
+                <div class="city-card">
+                    <img src="/img/sochi2.jpg" class="city-image" alt="Сочи" />
+                    <p class="city-name fs-2">Сочи</p>
+                </div>
+           </div>
+    </section>
+
+    <section class="service">
+        <h2 class="mb-4">Надёжный сервис для покупки авиабилетов</h2>
+        
+        <div class="top-service">
+            <div class="service-card service-card_rotate">
+                <h3>Обмен билета онлайн</h3>
+                <p>Меняйте рейсы самостоятельно в личном кабинете</p>
+            </div>
+
+            <div class="service-card service-card_color service-card_100">
+                <h3>100% возврат за билет</h3>
+                <p>Подключите эту услугу заранее, чтобы сдать даже невозвратный билет</p>
+            </div>
+        </div>
+    </section>
 </div>
