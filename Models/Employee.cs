@@ -16,7 +16,7 @@
         public string AddressApartment { get; set; }
         public string Position { get; set; }
         public int ExperienceYears { get; set; }
-        public int CrewId { get; set; }
-        public Crew Crew { get; set; }
+        public int? CrewId { get; set; }
+        public Crew? Crew { get; set; }
     }
 }

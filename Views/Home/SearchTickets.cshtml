@@ -4,34 +4,194 @@
 
 @model List<Airline.Models.Ticket>
 
-<div class="container">
-    <h1>Результаты поиска</h1>
-    @if (Model != null && Model.Any())
-    {
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Цена</th>
-                    <th>Рейс</th>
-                    <th>Место</th>
-                    <th>Класс</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var ticket in Model)
-                {
-                    <tr>
-                        <td>@ticket.Price</td>
-                        <td>@ticket.Flight.DepartureDestination.City - @ticket.Flight.ArrivalDestination.City</td>
-                        <td>@ticket.RowNumber - @ticket.SeatNumber</td>
-                        <td>@ticket.Class</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+<style>
+    .ticket{
+        display: grid;
+        grid-template-columns: 3fr 1fr;
+        margin-bottom: 30px;
     }
-    else
-    {
-        <p>Нет доступных билетов по вашему запросу.</p>
+
+    .ticket__trip{
+        background-color: #fff;
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 1px 10px 10px rgba(0, 0, 0, 0.05);
     }
+
+    .ticket__price{
+        background-color: #fff;
+        border-radius: 20px;
+        padding: 30px;
+        padding-left: 0px;
+        box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .ticket__price-info{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        border-left: 2px dashed #bbbbbb;
+        height: 100%;
+        padding-left: 20px;
+    }
+
+    .ticket__type-info {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    .ticket__time-wrapper {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .divider{
+        position: relative;
+        width: 100%;
+        height: 1px;
+        background-color: #b4b4b4;
+    }
+
+    .divider::before{
+        content: "";
+        position: absolute;
+        bottom: -1px;
+        height: 4px;
+        width: 4px;
+        background-color: #b4b4b4;
+        border-radius: 50%;
+    }
+
+    .divider::after {
+        content: "";
+        position: absolute;
+        bottom: -1px;
+        right: 0;
+        height: 4px;
+        width: 4px;
+        background-color: #b4b4b4;
+        border-radius: 50%;
+    }
+
+    .ticket__time{
+        font-size: 30px;
+        font-weight: 700;
+    }
+
+    .ticket__title{
+        font-size: 20px;
+        margin-bottom: 25px;
+    }
+
+    .ticket__trip-time{
+        font-size: 12px;
+        color: gray;
+        align-self: end;
+        padding-bottom: 5px;
+    }
+
+    .ticket__span{
+        font-size: 13px;
+        color: gray;
+    }
+
+    .ticket__span_black{
+        color: black;
+    }
+
+    .ticket__trip-info{
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+    }
+
+    .ticket__info-point{
+        display: flex;
+        flex-direction: column;
+    }
+    .qwe {
+        min-height: calc(100vh - 110px);
+        width: 100%;
+        background-color: #e7fcff;
+        /* background-color: #e8edee; */
+    }
+</style>
+
+<div class="qwe">
+    <div class="container">
+        <h1 class="mb-3">Результаты поиска</h1>
+
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var ticket in Model)
+            {
+                <div class="container">
+                    <div class="ticket">
+                        <div class="ticket__trip">
+                            <h2 class="ticket__title">Москва - Сочи</h2>
+
+                            @{
+                                DateTime departureTime = ticket.Flight.DepartureDatetime;
+                                DateTime arrivalTime = ticket.Flight.ArrivalDatetime;
+
+                                TimeSpan duration = arrivalTime - departureTime;
+
+                                int hours = (int)duration.TotalHours;
+                                int minutes = duration.Minutes;
+                            }
+
+                            <div class="ticket__time-wrapper">
+                                <span class="ticket__time">@departureTime.ToString("hh:mm")</span>
+
+                                <span class="ticket__trip-time">
+                                    Время в пути @(hours)ч @(minutes > 0 ? $"{minutes}мин" : "")
+                                </span>
+                                <span class="ticket__time">@arrivalTime.ToString("hh:mm")</span>
+                            </div>
+
+                            <div class="divider"></div>
+
+                            <div class="ticket__trip-info">
+                                <div class="ticket__info-point">
+                                    <span class="ticket__span">@ticket.Flight.DepartureDatetime.ToString("dd.MM.yyyy")</span>
+                                    <span class="ticket__span ticket__span_black">@ticket.Flight.DepartureDestination.Airport</span>
+                                    <span class="ticket__span">@ticket.Flight.DepartureDestination.City</span>
+                                </div>
+
+                                <div class="ticket__info-point">
+                                    <span class="ticket__span">@ticket.Flight.ArrivalDatetime.ToString("dd.MM.yyyy")</span>
+                                    <span class="ticket__span ticket__span_black">@ticket.Flight.ArrivalDestination.Airport</span>
+                                    <span class="ticket__span">@ticket.Flight.ArrivalDestination.City</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ticket__price">
+                            <div class="ticket__price-info">
+                                <div class="ticket__type-info">
+                                    <span class="ticket__time">@ticket.Price ₽</span>
+
+                                    <span>@(ticket.Class), 1 пассажир</span>
+
+                                    <span>
+                                        @(ticket.BaggageType == "Ручной" ? "Ручная кладь" :
+                                            ticket.BaggageType == "Полный" ? "Ручная кладь + багаж" :
+                                            "Без багажа")
+                                    </span>
+                                </div>
+
+                                <button class="btn btn-primary w-100">Оформить билет</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p>Нет доступных билетов по вашему запросу.</p>
+        }
+    </div>
 </div>
+

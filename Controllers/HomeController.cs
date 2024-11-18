@@ -38,6 +38,13 @@ namespace Airline.Controllers
                 .Where(t => t.Class == classType)
                 .ToList();
 
+            /*            var flights = _context.Flights
+                        .Include(f => f.DepartureDestination)
+                        .Include(f => f.ArrivalDestination)
+                        .Where(f => f.DepartureDestination.City == from &&
+                                     f.ArrivalDestination.City == to)
+                        .ToList();*/
+
             return View(tickets);
         }
 
