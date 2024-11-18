@@ -1,4 +1,5 @@
 using Airline.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
@@ -22,6 +23,7 @@ namespace Airline.Controllers
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult SearchTickets(string from, string to, DateTime flightDate, string classType)
         {

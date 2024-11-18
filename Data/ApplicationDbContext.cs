@@ -1,7 +1,9 @@
 ﻿using Airline.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-public class ApplicationDbContext : DbContext
+public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 {
     public DbSet<Flight> Flights { get; set; }
     public DbSet<Destination> Destinations { get; set; }
@@ -25,12 +27,17 @@ public class ApplicationDbContext : DbContext
             .HasOne(f => f.DepartureDestination)
             .WithMany(d => d.DepartureFlights)
             .HasForeignKey(f => f.DepartureDestinationId)
-            .OnDelete(DeleteBehavior.Restrict); // Если хотите запретить каскадное удаление
+            .OnDelete(DeleteBehavior.Restrict);
 
         modelBuilder.Entity<Flight>()
             .HasOne(f => f.ArrivalDestination)
             .WithMany(d => d.ArrivalFlights)
             .HasForeignKey(f => f.ArrivalDestinationId)
-            .OnDelete(DeleteBehavior.Restrict); // Если хотите запретить каскадное удаление
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Passenger>()
+            .HasOne(p => p.ApplicationUser)
+            .WithOne(u => u.Passenger)
+            .HasForeignKey<Passenger>(p => p.ApplicationUserId);
     }
 }

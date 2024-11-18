@@ -1,3 +1,5 @@
+using Airline.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Airline
@@ -8,8 +10,14 @@ namespace Airline
         {
             var builder = WebApplication.CreateBuilder(args);
 
+
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            // Настройка Identity
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
 
 
             builder.Services.AddControllersWithViews();
@@ -33,6 +41,8 @@ namespace Airline
 
             app.UseRouting();
 
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(

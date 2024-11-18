@@ -1,0 +1,47 @@
+﻿@model RegisterViewModel
+
+<div class="container mt-5 w-25">
+    <h2 class="text-center">Регистрация</h2>
+
+    <form asp-action="Register" method="post" class="needs-validation">
+
+        <div class="mb-3">
+            <label asp-for="Email" class="form-label">Почта</label>
+            <input asp-for="Email" type="email" class="form-control" required />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Password" class="form-label">Пароль</label>
+            <input asp-for="Password" type="password" class="form-control" required />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="ConfirmPassword" class="form-label">Повторите пароль</label>
+            <input asp-for="ConfirmPassword" type="password" class="form-control" required />
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label">Имя</label>
+            <input asp-for="Name" class="form-control" required />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Surname" class="form-label">Фамилия</label>
+            <input asp-for="Surname" class="form-control" required />
+            <span asp-validation-for="Surname" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
