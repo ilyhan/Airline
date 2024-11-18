@@ -77,6 +77,7 @@
         border-radius: 20px;
         padding: 20px;
         color: whitesmoke;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     }
 
     .service-card h3 {
@@ -124,24 +125,24 @@
         <div class="form-wrapper">
             <p class="fs-2">Укажите маршрут, чтобы найти дешевые авиабилеты</p>
 
-            <form class="form">
+            <form class="form" method="post" asp-action="SearchTickets">
                 <div>
-                    <input class="form-control" placeholder="Откуда" />
+                    <input name="from" class="form-control" placeholder="Откуда" required />
                     <span class="text-danger"></span>
                 </div>
 
                 <div>
-                    <input class="form-control" placeholder="Куда"/>
+                    <input name="to" class="form-control" placeholder="Куда" required />
                     <span class="text-danger"></span>
                 </div>
 
                 <div>
-                    <input type="date" id="flightDate" class="form-control" placeholder="Дата вылета" />
+                    <input name="flightDate" type="date" id="flightDate" class="form-control" placeholder="Дата вылета" required />
                     <span class="text-danger"></span>
                 </div>
 
                 <div>
-                    <select class="form-control" id="classSelect">
+                    <select name="classType" class="form-control" id="classSelect" required>
                         <option value="" disabled selected>Выберите класс</option>
                         <option value="Эконом">Эконом</option>
                         <option value="Бизнес">Бизнес</option>

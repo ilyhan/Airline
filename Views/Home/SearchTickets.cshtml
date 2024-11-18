@@ -1,0 +1,37 @@
+﻿@{
+    ViewData["Title"] = "Tickets";
+}
+
+@model List<Airline.Models.Ticket>
+
+<div class="container">
+    <h1>Результаты поиска</h1>
+    @if (Model != null && Model.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Цена</th>
+                    <th>Рейс</th>
+                    <th>Место</th>
+                    <th>Класс</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var ticket in Model)
+                {
+                    <tr>
+                        <td>@ticket.Price</td>
+                        <td>@ticket.Flight.DepartureDestination.City - @ticket.Flight.ArrivalDestination.City</td>
+                        <td>@ticket.RowNumber - @ticket.SeatNumber</td>
+                        <td>@ticket.Class</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>Нет доступных билетов по вашему запросу.</p>
+    }
+</div>
