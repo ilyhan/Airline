@@ -1,0 +1,175 @@
+﻿@{
+    ViewData["Title"] = "Ticketing";
+}
+
+@model Airline.Models.TicketingViewModel;
+
+<style>
+    .form-ticketing{
+        background-color: #fff;
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 4px 0px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .form-container{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .ticketing-input{
+        min-width: 200px;
+        flex:1;
+    }
+
+    .price{
+        display: block;
+        font-size: 24px;
+        font-weight: 500;
+    }
+
+    .ticketing-details{
+        background-color: #fff;
+        border-radius: 20px;
+        padding: 20px;
+        box-shadow: 4px 0px 10px rgba(0, 0, 0, 0.05);
+        list-style: none;
+    }
+
+
+    .ticketing-summary {
+        position: relative;
+    }
+
+    .ticketing-summary::after {
+        content: '';
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        translate: 0px -50%;
+        width: 18px;
+        height: 10px;
+        background: url("/img/arrow.svg");
+        background-size: cover;
+        margin-left: .75em;
+        transition: 0.2s;
+    }
+
+    .ticketing-details[open] > .ticketing-summary::after {
+        transform: rotate(180deg);
+    }
+
+    details > summary {
+        list-style: none;
+    }
+
+    details > summary::-webkit-details-marker {
+        display: none;
+    }
+
+    .qwe {
+        min-height: calc(100vh - 110px);
+        width: 100%;
+        background-color: #e7fcff;
+        /* background-color: #e8edee; */
+    }
+
+</style>
+
+<div class="qwe">
+    @if (Model != null)
+    {
+        <div class="container">
+            <h1 class="pt-3 fs-2">Оформление билета </h1>
+
+            <details class="ticketing-details my-3">
+                <summary class="fs-6 ticketing-summary" style="cursor: pointer;">
+                    @($"{Model.Ticket.Flight.DepartureDestination.City} - {Model.Ticket.Flight.ArrivalDestination.City}, {Model.Ticket.Flight.DepartureDatetime:dd.MM.yyyy}")
+                </summary>
+                <div class="p-2">
+                    <p>Дополнительная информация о рейсе...</p>
+                </div>
+            </details>
+
+            <form method="post" class="form-ticketing mt-3" asp-action="SuccesTicketing">
+                <h2 class="fs-3">Пассажир</h2>
+                
+                <div class="form-container">
+                    <div class="mb-3 ticketing-input">
+                        <label class="form-label">Имя</label>
+                        <input type="text" name="name" class="form-control" value=@Model.Passenger.FirstName required readonly />
+                    </div>
+
+                    <div class="mb-3 ticketing-input">
+                        <label class="form-label">Фамилия</label>
+                        <input type="text" name="surname" class="form-control" value=@Model.Passenger.LastName required readonly />
+                    </div>
+
+                    <div class="mb-3 ticketing-input">
+                        <label class="form-label">Отчество</label>
+                        <input type="text" name="patronymic" class="form-control" value=@Model.Passenger?.Patronymic />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Дата рождения</label>
+                        <input type="date" name="birthDate" class="form-control" value="@((Model.Passenger.BirthDate != null) ? Model.Passenger.BirthDate.Value.ToString("yyyy-MM-dd") : "")" required />
+                    </div>
+
+                    <div class="mb-3 ticketing-input">
+                        <label class="form-label">Пасспортные данные</label>
+                        <input type="text" name="passport" class="form-control" pattern="[0-9]{4}\s[0-9]{6}" placeholder="XXXX XXXXXX" required />
+                    </div>
+                    <input type="hidden" name="ticketId" value=@Model.Ticket.TicketId />
+                </div>
+
+                <span class="price">@Model.Ticket.Price ₽</span>
+                <button type="submit" class="btn btn-primary mt-3">Оформить билет</button>
+            </form>
+        </div>
+    }
+    else
+    {
+        <h2>Произошла ошибка</h2>
+    }
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#ticketingForm').on('submit', function (event) {
+            var isValid = true;
+
+            // Проверяем поле "Отчество"
+            var middleName = $('#middleName').val();
+            if (middleName.trim() === '') {
+                isValid = false;
+                $('#middleName').addClass('is-invalid');
+            } else {
+                $('#middleName').removeClass('is-invalid');
+            }
+
+            // Проверяем поле "Дата рождения"
+            var birthDate = $('#birthDate').val();
+            if (birthDate === '') {
+                isValid = false;
+                $('#birthDate').addClass('is-invalid');
+            } else {
+                $('#birthDate').removeClass('is-invalid');
+            }
+
+            // Проверяем поле "Паспортные данные"
+            var passportData = $('#passportData').val();
+            if (passportData.trim() === '') {
+                isValid = false;
+                $('#passportData').addClass('is-invalid');
+            } else {
+                $('#passportData').removeClass('is-invalid');
+            }
+
+            // Если форма не валидна, предотвращаем отправку
+            if (!isValid) {
+                event.preventDefault();
+            }
+        });
+    });
+</script>

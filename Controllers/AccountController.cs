@@ -1,6 +1,8 @@
 ﻿using Airline.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Airline.Controllers
@@ -74,9 +76,23 @@ namespace Airline.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
+
         public IActionResult Index()
         {
-            return View();
+            var email = User.Identity.Name;
+
+            var user = _userManager.Users.FirstOrDefault(u => u.Email == email);
+            Passenger passenger = null;
+
+            if (user != null)
+            {
+                passenger = _context.Passengers.FirstOrDefault(p => p.ApplicationUserId == user.Id);
+            }
+            var tickets = _context.Tickets
+                .Where(t => t.PassengerId == passenger.PassengerId)
+                .ToList();
+
+            return View(tickets);
         }
     }
 

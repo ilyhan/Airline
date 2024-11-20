@@ -1,5 +1,14 @@
-﻿<div>
+﻿@model List<Airline.Models.Ticket>
+
+<div>
     <h1>Аккаунт</h1>
+    @if (Model != null && Model.Any())
+    {
+        @foreach (var ticket in Model)
+        {
+            <p>@ticket.Price p</p>
+        }
+    }
     <form asp-action="Logout" method="post">
     <button type="submit">
         Выйти 

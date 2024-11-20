@@ -181,7 +181,10 @@
                                     </span>
                                 </div>
 
-                                <button class="btn btn-primary w-100">Оформить билет</button>
+                                <form method="post" asp-action="Ticketing">
+                                    <input type="hidden" name="Id" value="@ticket.TicketId" />
+                                    <button type="submit" class="btn btn-primary w-100">Оформить билет</button>
+                                </form>
                             </div>
                         </div>
                     </div>
