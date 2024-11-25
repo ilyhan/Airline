@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Airline.Models.AircraftType>
+
+<h1>Aircraft Types</h1>
+
+<p>
+    <a class="btn btn-success" asp-action="Create">Create New Aircraft Type</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Type ID</th>
+            <th>Brand</th>
+            <th>Range</th>
+            <th>Passenger Capacity (Economy)</th>
+            <th>Passenger Capacity (Business)</th>
+            <th>Max Flight Altitude</th>
+            <th>Cruise Speed</th>
+            <th>Max Takeoff Weight</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.TypeId</td>
+                <td>@item.Brand</td>
+                <td>@item.Range</td>
+                <td>@item.PassengerCapacityEconomy</td>
+                <td>@item.PassengerCapacityBusiness</td>
+
+                <td>@item.MaxFlightAltitude</td>
+                <td>@item.CruiseSpeed</td>
+                <td>@item.MaxTakeoffWeight</td>
+                <td>
+                    <a href="@Url.Action("Edit", new { id = item.TypeId })" class="btn btn-primary">Edit</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

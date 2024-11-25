@@ -29,7 +29,6 @@ namespace Airline.Controllers
         [HttpPost]
         public IActionResult SearchTickets(string from, string to, DateTime flightDate, string classType)
         {
-            Console.WriteLine(to);
             var flights = _context.Flights
                 .Include(f => f.DepartureDestination)
                 .Include(f => f.ArrivalDestination)

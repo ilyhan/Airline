@@ -81,19 +81,30 @@ namespace Airline.Controllers
         {
             var email = User.Identity.Name;
 
-            var user = _userManager.Users.FirstOrDefault(u => u.Email == email);
-            Passenger passenger = null;
-
-            if (user != null)
+            if (string.IsNullOrEmpty(email))
             {
-                passenger = _context.Passengers.FirstOrDefault(p => p.ApplicationUserId == user.Id);
+                return RedirectToAction("Login", "Account");
             }
+
+            var user = _userManager.Users.FirstOrDefault(u => u.Email == email);
+            if (user == null)
+            {
+                return NotFound(); 
+            }
+
+            var passenger = _context.Passengers.FirstOrDefault(p => p.ApplicationUserId == user.Id);
+            if (passenger == null)
+            {
+                return View(new List<Ticket>()); 
+            }
+
             var tickets = _context.Tickets
                 .Where(t => t.PassengerId == passenger.PassengerId)
                 .ToList();
 
             return View(tickets);
         }
+
     }
 
 }

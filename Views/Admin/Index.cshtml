@@ -1,0 +1,97 @@
+﻿@model List<Destination>
+
+<style>
+    .models-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .models-item{
+        border-radius: 20px;
+        box-shadow: 4px 0px 10px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+    }
+
+    .models-link{
+        position: relative;
+        display: block;
+        text-decoration: none;
+        background-color: #e7fcff;
+        cursor: pointer;
+        color: black;
+        padding: 15px;
+        transition: .3s ease;
+    }
+
+    .models-link:hover{
+        color: #232323;
+        background-color: #adfdff;
+    }
+
+    .models-link::after {
+        content: '';
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        translate: 0px -50%;
+        rotate: -90deg;
+        width: 14px;
+        height: 9px;
+        background: url("/img/arrow.svg");
+        background-size: cover; 
+        margin-left: .5em;
+    }
+
+</style>
+
+<div class="container">
+    <h1>Adminka</h1>
+
+    @if (Model != null)
+    {
+
+        <ul class="models-list">
+            <li class="models-item">
+                <a asp-controller="AircraftTypes" asp-action="Index" class="models-link">
+                    Типы самолетов
+                </a>
+            </li>
+
+            <li class="models-item">
+                <a class="models-link">
+                    Самолеты
+                </a>
+            </li>
+
+            <li class="models-item">
+                <a class="models-link">
+                    Маршруты
+                </a>
+            </li>
+
+            <li class="models-item">
+                <a class="models-link">
+                    Полеты
+                </a>
+            </li>
+
+            <li class="models-item">
+                <a asp-action="AllPassenger" class="models-link">
+                    Пассажиры
+                </a>
+            </li>
+        </ul>
+        <select name="classType" class="form-control" id="classSelect" required>
+            <option value="" disabled selected>Выберите аэропорт</option>
+            @foreach( var destination in Model)
+            {
+                <option value="Эконом">@destination.Airport (@destination.City)</option>
+            }
+
+        </select>
+    }
+</div>
