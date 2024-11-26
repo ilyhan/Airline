@@ -1,0 +1,23 @@
+﻿@model Airline.Models.Destination
+
+<h1>Create Aircraft Type</h1>
+
+<form asp-action="Create">
+    <div class="form-group">
+        <label asp-for="Country"></label>
+        <input asp-for="Country" class="form-control" />
+        <span asp-validation-for="Country" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="City"></label>
+        <input asp-for="City" class="form-control" />
+        <span asp-validation-for="City" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Airport"></label>
+        <input asp-for="Airport" class="form-control" />
+        <span asp-validation-for="Airport" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

@@ -9,6 +9,7 @@
 <table class="table">
     <thead>
         <tr>
+            <th>AircraftId</th>
             <th>Tail Number</th>
             <th>Operational Period</th>
             <th>Year Of Manufacture</th>
@@ -20,6 +21,7 @@
         @foreach (var item in Model)
         {
             <tr>
+                <td>@item.AircraftId</td>
                 <td>@item.TailNumber</td>
                 <td>@item.OperationalPeriod</td>
                 <td>@item.YearOfManufacture</td>

@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Airline.Models.Flight>
+
+<h2>Aircraft</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>FlightId</th>
+            <th>City</th>
+            <th>Airport</th>
+            <th>DepartureDatetime</th>
+            <th>City</th>
+            <th>Airport</th>
+            <th>ArrivalDatetime</th>
+            <th>Aircraft</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.FlightId</td>
+                <td>@item.DepartureDestination.City</td>
+                <td>@item.DepartureDestination.Airport</td>
+                <td>@item.DepartureDatetime.ToString("dd.MM.yyyy hh:mm")</td>
+                <td>@item.ArrivalDestination.City</td>
+                <td>@item.ArrivalDestination.Airport</td>
+                <td>@item.ArrivalDatetime.ToString("dd.MM.yyyy hh:mm")</td>
+                <td>@item.Aircraft.TailNumber</td>
+
+                <td>
+                    <form asp-action="Delete" method="post">
+                        <input type="hidden" name="id" value="@item.FlightId" />
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

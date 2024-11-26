@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <Folder Include="Data\Images\" />
+    <Folder Include="Views\Новая папка\" />
   </ItemGroup>
 
 </Project>
