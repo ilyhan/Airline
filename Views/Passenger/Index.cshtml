@@ -1,0 +1,37 @@
+﻿@model IEnumerable<Airline.Models.Passenger>
+
+<h2>Aircraft</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>PassengerId</th>
+            <th>FirstName</th>
+            <th>LastName</th>
+            <th>Patronymic</th>
+            <th>BirthDate</th>
+            <th>Tickets</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.PassengerId</td>
+                <td>@item.FirstName</td>
+                <td>@item.LastName</td>
+                <td>@item.Patronymic</td>
+                <td>@item.BirthDate?.ToString("dd.mm.yyyy")</td>
+                <td>@foreach (var ticket in item.Tickets)
+                    {
+                        <p style="margin: 0px">@ticket.TicketId</p>                    
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

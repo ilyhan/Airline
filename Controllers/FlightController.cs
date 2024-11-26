@@ -44,6 +44,16 @@ namespace Airline.Controllers
         {
             _context.Add(model.Flight);
             await _context.SaveChangesAsync();
+            var tickets = new Ticket[]
+            {
+                new Ticket { Class="Эконом", Flight=model.Flight, BaggageType="Полный", BaggageWeight=20, Price=5437 },
+                new Ticket { Class="Эконом", Flight=model.Flight, BaggageType="Ручной", BaggageWeight=10, Price=4320 },
+                new Ticket { Class="Эконом", Flight=model.Flight, BaggageType="Полный", BaggageWeight=10, Price=4200 },
+                new Ticket { Class="Бизнес", Flight=model.Flight, BaggageType="Полный", BaggageWeight=20, Price=12340 },
+                new Ticket { Class="Бизнес", Flight=model.Flight, BaggageType="Полный", BaggageWeight=20, Price=14000 }
+            };
+            _context.Tickets.AddRangeAsync(tickets);
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 

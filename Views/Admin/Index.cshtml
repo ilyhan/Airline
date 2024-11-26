@@ -1,5 +1,4 @@
-﻿@model List<Destination>
-
+﻿
 <style>
     .models-list {
         display: flex;
@@ -51,47 +50,36 @@
 <div class="container">
     <h1>Adminka</h1>
 
-    @if (Model != null)
-    {
+    <ul class="models-list">
+        <li class="models-item">
+            <a asp-controller="AircraftTypes" asp-action="Index" class="models-link">
+                Типы самолетов
+            </a>
+        </li>
 
-        <ul class="models-list">
-            <li class="models-item">
-                <a asp-controller="AircraftTypes" asp-action="Index" class="models-link">
-                    Типы самолетов
-                </a>
-            </li>
+        <li class="models-item">
+            <a asp-controller="Aircraft" asp-action="Index" class="models-link">
+                Самолеты
+            </a>
+        </li>
 
-            <li class="models-item">
-                <a asp-controller="Aircraft" asp-action="Index" class="models-link">
-                    Самолеты
-                </a>
-            </li>
+        <li class="models-item">
+            <a asp-controller="Destination" asp-action="Index" class="models-link">
+                Маршруты
+            </a>
+        </li>
 
-            <li class="models-item">
-                <a asp-controller="Destination" asp-action="Index" class="models-link">
-                    Маршруты
-                </a>
-            </li>
+        <li class="models-item">
+            <a asp-controller="Flight" asp-action="Index" class="models-link">
+                Полеты
+            </a>
+        </li>
 
-            <li class="models-item">
-                <a asp-controller="Flight" asp-action="Index" class="models-link">
-                    Полеты
-                </a>
-            </li>
-
-            <li class="models-item">
-                <a asp-action="AllPassenger" class="models-link">
-                    Пассажиры
-                </a>
-            </li>
-        </ul>
-        <select name="classType" class="form-control" id="classSelect" required>
-            <option value="" disabled selected>Выберите аэропорт</option>
-            @foreach( var destination in Model)
-            {
-                <option value="Эконом">@destination.Airport (@destination.City)</option>
-            }
-
-        </select>
-    }
+        <li class="models-item">
+            <a asp-controller="Passenger" asp-action="Index" class="models-link">
+                Пассажиры
+            </a>
+        </li>
+    </ul>
+ 
 </div>

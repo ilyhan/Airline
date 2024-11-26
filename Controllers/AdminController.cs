@@ -15,8 +15,7 @@ namespace Airline.Controllers
         }
         public IActionResult Index()
         {
-            var destinations = _context.Destinations.ToList();
-            return View(destinations);
+            return View();
         }
 
         public IActionResult AllPassenger()
