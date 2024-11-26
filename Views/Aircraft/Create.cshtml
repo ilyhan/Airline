@@ -1,0 +1,43 @@
+﻿@model Airline.Models.ViewModels.CreateAircraftViewModel
+
+<h2>Create Aircraft</h2>
+
+<form asp-action="Create">
+    <div class="form-group">
+        <label asp-for="Aircraft.TailNumber"></label>
+        <input asp-for="Aircraft.TailNumber" class="form-control" />
+        <span asp-validation-for="Aircraft.TailNumber" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Aircraft.OperationalPeriod"></label>
+        <input asp-for="Aircraft.OperationalPeriod" class="form-control" />
+        <span asp-validation-for="Aircraft.OperationalPeriod" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Aircraft.YearOfManufacture"></label>
+        <input asp-for="Aircraft.YearOfManufacture" class="form-control" />
+        <span asp-validation-for="Aircraft.YearOfManufacture" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Aircraft.TypeId"></label>
+        <select asp-for="Aircraft.TypeId" class="form-control">
+            @foreach(var type in Model.AircraftTypes)
+            {
+                <option value=@type.TypeId>@type.Brand</option>
+            }
+        </select>
+        <span asp-validation-for="Aircraft.TypeId" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Airline.Models.Aircraft>
+
+<h2>Aircraft</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Tail Number</th>
+            <th>Operational Period</th>
+            <th>Year Of Manufacture</th>
+            <th>Type</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.TailNumber</td>
+                <td>@item.OperationalPeriod</td>
+                <td>@item.YearOfManufacture</td>
+                <td>@item.Type.Brand</td>
+                <td>
+                    <form asp-action="Delete" method="post">
+                        <input type="hidden" name="id" value="@item.AircraftId" />
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
