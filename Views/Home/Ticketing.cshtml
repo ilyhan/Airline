@@ -88,7 +88,19 @@
                     @($"{Model.Ticket.Flight.DepartureDestination.City} - {Model.Ticket.Flight.ArrivalDestination.City}, {Model.Ticket.Flight.DepartureDatetime:dd.MM.yyyy}")
                 </summary>
                 <div class="p-2">
-                    <p>Дополнительная информация о рейсе...</p>
+                    <h4>Вылет:</h4>
+                    <div>
+                        <span class="ticket__span">@Model.Ticket.Flight.DepartureDatetime.ToString("dd.MM.yyyy hh:mm")</span>
+                        <span class="ticket__span ticket__span_black">@Model.Ticket.Flight.DepartureDestination.Airport</span>
+                        <span class="ticket__span">@Model.Ticket.Flight.DepartureDestination.City</span>
+                    </div>
+
+                    <h4>Прилеь:</h4>
+                    <div>
+                        <span class="ticket__span">@Model.Ticket.Flight.ArrivalDatetime.ToString("dd.MM.yyyy hh:mm")</span>
+                        <span class="ticket__span ticket__span_black">@Model.Ticket.Flight.ArrivalDestination.Airport</span>
+                        <span class="ticket__span">@Model.Ticket.Flight.ArrivalDestination.City</span>
+                    </div>
                 </div>
             </details>
 
