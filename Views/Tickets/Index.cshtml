@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Tickets";
+}
+
+@model IEnumerable<Airline.Models.Ticket>
+
+<h1>Билеты</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id билеты</th>
+            <th>Id рейса</th>
+            <th>Цена</th>
+            <th>Номер Ряда</th>
+            <th>Номер Места</th>
+            <th>Класс</th>
+            <th>Id пассажира</th>
+            <th>Тип Багажа</th>
+            <th>Вес Багажа</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ticket in Model)
+        {
+            <tr>
+                <td>@ticket.TicketId</td>
+                <td>@ticket.FlightId</td>
+                <td>@ticket.Price</td>
+                <td>@ticket.RowNumber</td>
+                <td>@ticket.SeatNumber</td>
+                <td>@ticket.Class</td>
+                <td>@ticket.PassengerId</td>
+                <td>
+                    @(ticket.BaggageType == "Ручной" ? "Ручная кладь" :
+                        ticket.BaggageType == "Полный" ? "Ручная кладь + багаж" :
+                        "Без багажа")
+                </td>
+                <td>@ticket.BaggageWeight</td>
+            </tr>
+        }
+    </tbody>
+</table>
