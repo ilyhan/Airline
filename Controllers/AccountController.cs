@@ -98,8 +98,14 @@ namespace Airline.Controllers
                 return View(new List<Ticket>()); 
             }
 
-            var tickets = _context.Tickets
-                .Where(t => t.PassengerId == passenger.PassengerId)
+            var flights = _context.Flights
+                .Include(f => f.DepartureDestination)
+                .Include(f => f.ArrivalDestination)
+                .Include(f => f.Tickets)
+                .ToList();
+
+            var tickets = flights.SelectMany(f => f.Tickets)
+                .Where(t => t.PassengerId == passenger.PassengerId) 
                 .ToList();
 
             return View(tickets);
