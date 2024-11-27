@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<Airline.Models.Destination>
 
-<h1>Destination</h1>
+<h1>Пункты</h1>
 
 <p>
     <a class="btn btn-success" asp-action="Create">Create New Aircraft Type</a>
@@ -9,11 +9,11 @@
 <table class="table">
     <thead>
         <tr>
-            <th>DestinationId</th>
-            <th>Country</th>
-            <th>City</th>
-            <th>Airport</th>
-            <th>Actions</th>
+            <th>Id пункта</th>
+            <th>Страна</th>
+            <th>Город</th>
+            <th>Аэропорт</th>
+            <th>Действия</th>
         </tr>
     </thead>
     <tbody>
@@ -26,10 +26,10 @@
                 <td>@item.Airport</td>
 
                 <td style="display: flex; gap: 20px">
-                    <a  class="btn btn-primary">Edit</a>
+                    <a href="@Url.Action("Edit", new { id = item.DestinationId })" class="btn btn-primary">Изменить</a>
                     <form asp-action="Delete" method="post">
                         <input type="hidden" name="id" value="@item.DestinationId" />
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="submit" class="btn btn-danger">Удалить</button>
                     </form>
                 </td>
             </tr>

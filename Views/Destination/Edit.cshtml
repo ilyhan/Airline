@@ -1,9 +1,9 @@
 ﻿@model Airline.Models.Destination
 
 <div class="container">
-    <h1>Создание пункта</h1>
+    <h1>Редактирование пункта</h1>
 
-    <form asp-action="Create">
+    <form asp-action="Edit">
         <div class="form-group">
             <label asp-for="Country">Страна</label>
             <input asp-for="Country" class="form-control" />
@@ -20,8 +20,9 @@
             <span asp-validation-for="Airport" class="text-danger"></span>
         </div>
 
-        <button type="submit" class="btn btn-primary">Create</button>
-        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+        <input type="hidden" asp-for="DestinationId" />
+        <button type="submit" class="btn btn-primary">Изменить</button>
+        <a asp-action="Index" class="btn btn-secondary">Отменить</a>
     </form>
 </div>
 
