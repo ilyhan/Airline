@@ -1,23 +1,23 @@
 ﻿@model IEnumerable<Airline.Models.AircraftType>
 
-<h1>Aircraft Types</h1>
+<h1>Тип самолета</h1>
 
 <p>
-    <a class="btn btn-success" asp-action="Create">Create New Aircraft Type</a>
+    <a class="btn btn-success" asp-action="Create">Создать новый тип</a>
 </p>
 
 <table class="table">
     <thead>
         <tr>
-            <th>Type ID</th>
-            <th>Brand</th>
-            <th>Range</th>
-            <th>Passenger Capacity (Economy)</th>
-            <th>Passenger Capacity (Business)</th>
-            <th>Max Flight Altitude</th>
-            <th>Cruise Speed</th>
-            <th>Max Takeoff Weight</th>
-            <th>Actions</th>
+            <th>Тип ID</th>
+            <th>Бренд</th>
+            <th>Дальность</th>
+            <th>Кол-во мест (Эконом)</th>
+            <th>Кол-во мест (Бизнес)</th>
+            <th>Максимальная высотка полета</th>
+            <th>Крейсерская скорость</th>
+            <th>Макс взлетная масса</th>
+            <th>Действия</th>
         </tr>
     </thead>
     <tbody>
@@ -35,6 +35,11 @@
                 <td>@item.MaxTakeoffWeight</td>
                 <td>
                     <a href="@Url.Action("Edit", new { id = item.TypeId })" class="btn btn-primary">Edit</a>
+
+                    <form asp-action="Delete" method="post">
+                        <input type="hidden" name="id" value="@item.TypeId" />
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
                 </td>
             </tr>
         }

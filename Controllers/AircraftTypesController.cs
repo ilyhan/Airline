@@ -1,4 +1,5 @@
 ﻿using Airline.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Airline.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AircraftTypesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -15,7 +17,6 @@ namespace Airline.Controllers
             _context = context;
         }
 
-        // GET: AircraftTypes
         public async Task<IActionResult> Index()
         {
             var aircraftTypes = await _context.AircraftTypes.ToListAsync();
@@ -32,7 +33,7 @@ namespace Airline.Controllers
         {
             _context.Add(aircraftType);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> Edit(int? id)
@@ -53,33 +54,39 @@ namespace Airline.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(int id, AircraftType aircraftType)
         {
-            if (id != aircraftType.TypeId)
-            {
-                return NotFound();
-            }
-
             try
             {
                 _context.Update(aircraftType);
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch
             {
-                if (!AircraftTypeExists(aircraftType.TypeId))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index");
         }
 
-        private bool AircraftTypeExists(int id)
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
         {
-            return _context.AircraftTypes.Any(e => e.TypeId == id);
+            var aircraftType = await _context.AircraftTypes
+                .Include(a => a.Aircrafts) 
+                .FirstOrDefaultAsync(a => a.TypeId == id);
+
+            if (aircraftType == null)
+            {
+                return NotFound();
+            }
+
+            if (aircraftType.Aircrafts != null && aircraftType.Aircrafts.Any())
+            {
+                return BadRequest("Нельзя удалить тип самолета, пока существуют самолеты на его основе.");
+            }
+
+            _context.AircraftTypes.Remove(aircraftType);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index");
         }
     }
 }
