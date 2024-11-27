@@ -2,9 +2,11 @@
 using Airline.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Airline.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class FlightController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -54,7 +56,7 @@ namespace Airline.Controllers
             };
             _context.Tickets.AddRangeAsync(tickets);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -68,7 +70,7 @@ namespace Airline.Controllers
 
             _context.Flights.Remove(flight);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index");
         }
     }
 }
