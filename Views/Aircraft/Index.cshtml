@@ -1,20 +1,20 @@
 ﻿@model IEnumerable<Airline.Models.Aircraft>
 
-<h2>Aircraft</h2>
+<h2>Самолеты</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class ="btn btn-success" asp-action="Create">Создать самолет</a>
 </p>
 
 <table class="table">
     <thead>
         <tr>
-            <th>AircraftId</th>
-            <th>Tail Number</th>
-            <th>Operational Period</th>
-            <th>Year Of Manufacture</th>
-            <th>Type</th>
-            <th></th>
+            <th>Id самолета</th>
+            <th>Бортовой номер</th>
+            <th>Период эксплуатации</th>
+            <th>Год создания</th>
+            <th>Тип</th>
+            <th>Действия</th>
         </tr>
     </thead>
     <tbody>
@@ -27,9 +27,11 @@
                 <td>@item.YearOfManufacture</td>
                 <td>@item.Type.Brand</td>
                 <td>
+                    <a href="@Url.Action("Edit", new { id = item.AircraftId })" class="btn btn-primary">Изменить</a>
+
                     <form asp-action="Delete" method="post">
                         <input type="hidden" name="id" value="@item.AircraftId" />
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="submit" class="btn btn-danger">Удалить</button>
                     </form>
                 </td>
             </tr>

@@ -34,11 +34,11 @@
                 <td>@item.CruiseSpeed</td>
                 <td>@item.MaxTakeoffWeight</td>
                 <td>
-                    <a href="@Url.Action("Edit", new { id = item.TypeId })" class="btn btn-primary">Edit</a>
+                    <a href="@Url.Action("Edit", new { id = item.TypeId })" class="btn btn-primary">Изменить</a>
 
                     <form asp-action="Delete" method="post">
                         <input type="hidden" name="id" value="@item.TypeId" />
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="submit" class="btn btn-danger">Удалить</button>
                     </form>
                 </td>
             </tr>

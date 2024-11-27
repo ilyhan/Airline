@@ -1,43 +1,52 @@
 ﻿@model Airline.Models.AircraftType
 
-<h1>Create Aircraft Type</h1>
+<div class="container">
+    <h1>Create Aircraft Type</h1>
 
-<form asp-action="Create">
-    <div class="form-group">
-        <label asp-for="Brand"></label>
-        <input asp-for="Brand" class="form-control" />
-        <span asp-validation-for="Brand" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Range"></label>
-        <input asp-for="Range" class="form-control" />
-        <span asp-validation-for="Range" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="PassengerCapacityEconomy"></label>
-        <input asp-for="PassengerCapacityEconomy" class="form-control" />
-        <span asp-validation-for="PassengerCapacityEconomy" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="PassengerCapacityBusiness"></label>
-        <input asp-for="PassengerCapacityBusiness" class="form-control" />
-        <span asp-validation-for="PassengerCapacityBusiness" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="MaxFlightAltitude"></label>
-        <input asp-for="MaxFlightAltitude" class="form-control" />
-        <span asp-validation-for="MaxFlightAltitude" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="CruiseSpeed"></label>
-        <input asp-for="CruiseSpeed" class="form-control" />
-        <span asp-validation-for="CruiseSpeed" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="MaxTakeoffWeight"></label>
-        <input asp-for="MaxTakeoffWeight" class="form-control" />
-        <span asp-validation-for="MaxTakeoffWeight" class="text-danger"></span>
-    </div>
-    <button type="submit" class="btn btn-primary">Create</button>
-    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
-</form>
+    <form asp-action="Create">
+        <div class="form-group">
+            <label asp-for="Brand">Бренд</label>
+            <input asp-for="Brand" class="form-control" />
+            <span asp-validation-for="Brand" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Range">Дальность полета</label>
+            <input asp-for="Range" class="form-control" />
+            <span asp-validation-for="Range" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="PassengerCapacityEconomy">Кол-во мест в экономе</label>
+            <input asp-for="PassengerCapacityEconomy" class="form-control" />
+            <span asp-validation-for="PassengerCapacityEconomy" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="PassengerCapacityBusiness">Кол-во мест в бизнесе</label>
+            <input asp-for="PassengerCapacityBusiness" class="form-control" />
+            <span asp-validation-for="PassengerCapacityBusiness" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="MaxFlightAltitude">Максимальная высота полета</label>
+            <input asp-for="MaxFlightAltitude" class="form-control" />
+            <span asp-validation-for="MaxFlightAltitude" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="CruiseSpeed">Крейсерская скорость</label>
+            <input asp-for="CruiseSpeed" class="form-control" />
+            <span asp-validation-for="CruiseSpeed" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="MaxTakeoffWeight">Взлетная масса</label>
+            <input asp-for="MaxTakeoffWeight" class="form-control" />
+            <span asp-validation-for="MaxTakeoffWeight" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Создать</button>
+        <a asp-action="Index" class="btn btn-secondary">Отменить</a>
+    </form>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
