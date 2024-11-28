@@ -10,6 +10,7 @@ namespace Airline.Models
         public string? Patronymic { get; set; }
         public string? Passport { get; set; }
         public DateTime? BirthDate { get; set; }
+        public byte[]? Photo { get; set; }
         public ICollection<Ticket>? Tickets { get; set; }
 
         public string? ApplicationUserId { get; set; } 

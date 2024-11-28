@@ -1,0 +1,41 @@
+﻿@model Airline.Models.Passenger
+
+<div class="container">
+    <h3>Редактирование профиля</h3>
+
+    <form asp-action="Edit" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label asp-for="LastName">Фамилия:</label>
+            <input asp-for="LastName" class="form-control" required />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="FirstName">Имя:</label>
+            <input asp-for="FirstName" class="form-control" required />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Patronymic">Отчество:</label>
+            <input asp-for="Patronymic" class="form-control" />
+            <span asp-validation-for="Patronymic" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="BirthDate">Дата рождения:</label>
+            <input asp-for="BirthDate" class="form-control" type="date" />
+            <span asp-validation-for="BirthDate" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3 mt-3">
+            <label>Загрузить фотографию:</label>
+            <input type="file" name="avatar" class="form-control-file" accept="image/*" />
+        </div>
+
+        <input type="hidden" name="id" value="@Model.PassengerId" />
+
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+        <a asp-action="Index" class="btn btn-secondary">Отменить</a>
+    </form>
+</div>

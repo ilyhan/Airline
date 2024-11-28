@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Metadata;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Airline.Controllers
 {
@@ -76,7 +78,6 @@ namespace Airline.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
-
         public IActionResult Index()
         {
             var email = User.Identity.Name;
@@ -89,15 +90,20 @@ namespace Airline.Controllers
             var user = _userManager.Users.FirstOrDefault(u => u.Email == email);
             if (user == null)
             {
-                return NotFound(); 
+                return NotFound();
             }
 
             var passenger = _context.Passengers.FirstOrDefault(p => p.ApplicationUserId == user.Id);
             if (passenger == null)
             {
-                return View(new List<Ticket>()); 
+                return NotFound();
             }
 
+            return View(passenger);
+        }
+
+        public IActionResult Tickets(int id)
+        {
             var flights = _context.Flights
                 .Include(f => f.DepartureDestination)
                 .Include(f => f.ArrivalDestination)
@@ -105,10 +111,57 @@ namespace Airline.Controllers
                 .ToList();
 
             var tickets = flights.SelectMany(f => f.Tickets)
-                .Where(t => t.PassengerId == passenger.PassengerId) 
+                .Where(t => t.PassengerId == id)
                 .ToList();
 
+            if(tickets == null)
+            {
+                return NotFound();
+            }
+
             return View(tickets);
+        }
+
+        public IActionResult Edit(int id)
+        {
+            var passenger = _context.Passengers.FirstOrDefault(p => p.PassengerId == id);
+            if (passenger == null) { 
+                return NotFound();
+            }
+            return View(passenger);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, Passenger passenger, IFormFile avatar)
+        {
+            var existingPassenger = await _context.Passengers.FindAsync(id);
+            if (existingPassenger == null)
+            {
+                return NotFound();
+            }
+
+            existingPassenger.LastName = passenger.LastName;
+            existingPassenger.FirstName = passenger.FirstName;
+            existingPassenger.Patronymic = passenger.Patronymic;
+            existingPassenger.BirthDate = passenger.BirthDate;
+
+            if (avatar != null)
+            {
+                byte[] p1 = null;
+                using (var fs1 = avatar.OpenReadStream())
+                using (var ms1 = new MemoryStream())
+                {
+                    await fs1.CopyToAsync(ms1);
+                    p1 = ms1.ToArray();
+                }
+                existingPassenger.Photo = p1;
+            }
+
+            _context.Passengers.Update(existingPassenger);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index");
+
         }
 
     }
