@@ -1,4 +1,5 @@
-﻿using Airline.Models;
+﻿using Airline.DAL;
+using Airline.Models;
 using Airline.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,16 +10,16 @@ namespace Airline.Controllers
     [Authorize(Roles = "Admin")]
     public class DestinationController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly DestinationDBstorage _destinationDBstorage;
 
         public DestinationController(ApplicationDbContext context)
         {
-            _context = context;
+            _destinationDBstorage = new DestinationDBstorage(context);
         }
 
         public async Task<IActionResult> Index()
         {
-            var destinations = await _context.Destinations.ToListAsync();
+            var destinations = await _destinationDBstorage.getAllDestinations();
             return View(destinations);
         }
 
@@ -28,10 +29,9 @@ namespace Airline.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Destination destination)
+        public IActionResult Create(Destination destination)
         {
-            _context.Add(destination);
-            await _context.SaveChangesAsync();
+            _destinationDBstorage.AddDestination(destination);
             return RedirectToAction("Index");
         }
 
@@ -42,7 +42,7 @@ namespace Airline.Controllers
                 return NotFound();
             }
 
-            var destination = await _context.Destinations.FindAsync(id);
+            var destination = await _destinationDBstorage.FindById(id);
 
             if (destination == null)
             {
@@ -58,8 +58,7 @@ namespace Airline.Controllers
 
             try
             {
-                _context.Update(dest);
-                await _context.SaveChangesAsync();
+               await _destinationDBstorage.Update(dest);
             }
             catch
             {
@@ -71,24 +70,7 @@ namespace Airline.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
-            var dest = await _context.Destinations
-                .Include(a => a.DepartureFlights)
-                .Include(a => a.ArrivalFlights)
-                .FirstOrDefaultAsync(a => a.DestinationId == id);
-
-            if (dest == null)
-            {
-                return NotFound();
-            }
-
-            if (dest.ArrivalFlights.Any() || dest.DepartureFlights.Any())
-            {
-                return BadRequest("Нельзя удалить пункт, тк на него назначен полет");
-            }
-
-            _context.Destinations.Remove(dest);
-            await _context.SaveChangesAsync();
-
+            await _destinationDBstorage.DeleteById(id);
             return RedirectToAction("Index");
         }
     }
